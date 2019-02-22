@@ -2,8 +2,9 @@
 'use strict'
 const path = require('path');
 const config = require('../config.js');
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
-let extractTextPlugin = new ExtractTextPlugin('css/[name].css');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+// const ExtractTextPlugin = require("extract-text-webpack-plugin");
+// let extractTextPlugin = new ExtractTextPlugin('css/[name].css');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const OpenBrowserPlugin = require('open-browser-webpack-plugin');
 const webpack = require('webpack');
@@ -18,10 +19,22 @@ module.exports = {
         }, {
             // css资源
             test: /\.(scss|css)$/,
-            use: extractTextPlugin.extract({
-                fallback: 'style-loader',
-                use: ['css-loader?sourceMap', 'postcss-loader?sourceMap=inline', 'sass-loader']
-            })
+            use: [{
+                    loader: MiniCssExtractPlugin.loader,
+                },
+                {
+                    loader: "style-loader"
+                },
+                {
+                    loader: "css-loader"
+                },
+                {
+                    loader: "postcss-loader"
+                },
+                {
+                    loader: "sass-loader"
+                }
+            ]
         }, {
             // 图片资源
             test: /\.(png|jpeg|jpg|gif)$/,
@@ -55,32 +68,36 @@ module.exports = {
         chunkFilename: 'js/[name]-chunk.js'
     },
     plugins: [
-        extractTextPlugin,
         new CleanWebpackPlugin(['test'], {
             root: path.resolve(__dirname, '..')
         }),
-        new OpenBrowserPlugin({
-            url: 'http://test.sina.com.cn/'
+        new MiniCssExtractPlugin({
+            filename: 'css/[name].css',
+            chunkFilename: 'css/[name].css',
         }),
-        new webpack.optimize.CommonsChunkPlugin({
-            name: 'vendor',
-            /**
-             * 打包来源精确控制
-             * @param  {Object} module 模块路径相关信息
-             * module.context: The directory that stores the file. For example: '/my_project/node_modules/example-dependency'
-             * module.resource: The name of the file being processed. For example: '/my_project/node_modules/example-dependency/index.js'
-             * @param  {Number} count  模块被引用的次数
-             * @return {Boolean}       返回boolean类型，如果是true，将进行提取
-             */
-            minChunks: function (module, count) {
-                // This prevents stylesheet resources with the .css or .scss extension
-                // from being moved from their original chunk to the vendor chunk
-                if (module.resource && (/^.*\.(css|scss)$/).test(module.resource)) {
-                    return false;
-                }
+        new OpenBrowserPlugin({
+            url: 'http://test.sina.com.cn/',
+            browser:'chrome'
+        }),
+        // new webpack.optimize.CommonsChunkPlugin({
+        //     name: 'vendor',
+        //     /**
+        //      * 打包来源精确控制
+        //      * @param  {Object} module 模块路径相关信息
+        //      * module.context: The directory that stores the file. For example: '/my_project/node_modules/example-dependency'
+        //      * module.resource: The name of the file being processed. For example: '/my_project/node_modules/example-dependency/index.js'
+        //      * @param  {Number} count  模块被引用的次数
+        //      * @return {Boolean}       返回boolean类型，如果是true，将进行提取
+        //      */
+        //     minChunks: function (module, count) {
+        //         // This prevents stylesheet resources with the .css or .scss extension
+        //         // from being moved from their original chunk to the vendor chunk
+        //         if (module.resource && (/^.*\.(css|scss)$/).test(module.resource)) {
+        //             return false;
+        //         }
 
-                return module.context && module.context.indexOf("node_modules") !== -1;
-            }
-        })
+        //         return module.context && module.context.indexOf("node_modules") !== -1;
+        //     }
+        // })
     ]
 };

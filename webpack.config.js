@@ -42,7 +42,8 @@ module.exports = (env) => {
             break;
         case 'prod':
             // 生产环境
-            webpackConfig = baseMerge(commonConf, spritePlugins, entryConf, prodConf, resovle, htmlPlugins);
+            // webpackConfig = baseMerge(commonConf, spritePlugins, entryConf, prodConf, resovle, htmlPlugins);
+            webpackConfig = baseMerge(commonConf, entryConf, prodConf, resovle, htmlPlugins);
             break;
     }
     return webpackConfig;

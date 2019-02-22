@@ -4,7 +4,7 @@ const config = require('../config.js');
 const webpack = require('webpack');
 const path = require('path');
 const OpenBrowserPlugin = require('open-browser-webpack-plugin');
-
+const TerserPlugin = require('terser-webpack-plugin');
 module.exports = {
     devtool: 'eval',
     module: {
@@ -47,30 +47,33 @@ module.exports = {
         publicPath: config.publicPath,
         chunkFilename: 'js/[name]-chunk.js'
     },
+    optimization:{
+
+    },
     plugins: [
         new webpack.NamedModulesPlugin(),
         new OpenBrowserPlugin({
             url: 'http://test.sina.com.cn/'
         }),
-        new webpack.optimize.CommonsChunkPlugin({
-            name: 'vendor',
-            /**
-             * 打包来源精确控制
-             * @param  {Object} module 模块路径相关信息
-             * module.context: The directory that stores the file. For example: '/my_project/node_modules/example-dependency'
-             * module.resource: The name of the file being processed. For example: '/my_project/node_modules/example-dependency/index.js'
-             * @param  {Number} count  模块被引用的次数
-             * @return {Boolean}       返回boolean类型，如果是true，将进行提取
-             */
-            minChunks: function (module, count) {
-                // This prevents stylesheet resources with the .css or .scss extension
-                // from being moved from their original chunk to the vendor chunk
-                if (module.resource && (/^.*\.(css|scss)$/).test(module.resource)) {
-                    return false;
-                }
+        // new webpack.optimize.CommonsChunkPlugin({
+        //     name: 'vendor',
+        //     /**
+        //      * 打包来源精确控制
+        //      * @param  {Object} module 模块路径相关信息
+        //      * module.context: The directory that stores the file. For example: '/my_project/node_modules/example-dependency'
+        //      * module.resource: The name of the file being processed. For example: '/my_project/node_modules/example-dependency/index.js'
+        //      * @param  {Number} count  模块被引用的次数
+        //      * @return {Boolean}       返回boolean类型，如果是true，将进行提取
+        //      */
+        //     minChunks: function (module, count) {
+        //         // This prevents stylesheet resources with the .css or .scss extension
+        //         // from being moved from their original chunk to the vendor chunk
+        //         if (module.resource && (/^.*\.(css|scss)$/).test(module.resource)) {
+        //             return false;
+        //         }
 
-                return module.context && module.context.indexOf("node_modules") !== -1;
-            }
-        })
+        //         return module.context && module.context.indexOf("node_modules") !== -1;
+        //     }
+        // })
     ]
 };
