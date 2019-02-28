@@ -4,7 +4,7 @@ const config = require('../config.js');
 const webpack = require('webpack');
 const path = require('path');
 const OpenBrowserPlugin = require('open-browser-webpack-plugin');
-const TerserPlugin = require('terser-webpack-plugin');
+
 module.exports = {
     devtool: 'eval',
     module: {

@@ -15,7 +15,7 @@ module.exports = {
         let entryFiles = glob.sync(jsDir + '/*.js');
         let map = {};
         entryFiles.forEach((filePath) => {
-            let filename = filePath.substring(filePath.lastIndexOf('\/') + 1, filePath.lastIndexOf('.'))
+            let filename = filePath.substring(filePath.lastIndexOf('\/') + 1, filePath.lastIndexOf('.'));
             map[filename] = filePath
         });
         return map;

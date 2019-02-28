@@ -12,8 +12,7 @@ let imgName = config.md5 ? 'img/[name]-[hash:6].[ext]' : 'img/[name].[ext]';
 
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const TinyPngWebpackPlugin = require('tinypng-webpack-plugin');
-const webpack = require('webpack');
-
+const HtmlAssetsPlugin = require('./htmlAssetsPlugin');
 module.exports = {
     mode: 'production',
     module: {
@@ -24,10 +23,6 @@ module.exports = {
         }, {
             // css资源
             test: /\.(scss|css)$/,
-            // use: extractTextPlugin.extract({
-            //     fallback: 'style-loader',
-            //     use: ['css-loader', 'postcss-loader', 'sass-loader']
-            // })
             use: [{
                     loader: MiniCssExtractPlugin.loader,
                 },
@@ -71,8 +66,7 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, '..', 'assets'),
         filename: jsName,
-        publicPath: config.onLinePublicPath,
-        chunkFilename: 'js/[name]-chunk-[chunkhash:6].js'
+        publicPath: config.onLinePublicPath
     },
     optimization:{
         minimizer:[
@@ -101,8 +95,19 @@ module.exports = {
         splitChunks:{
             //js默认最大初始化并行请求数字
             maxInitialRequests:4,
-            chunks: 'all'
-        }
+            chunks: 'initial',
+            cacheGroups: {
+                vendors: {
+                    name:'vendors',
+                    test: /[\\/]node_modules[\\/]/,
+                    priority: -10
+                }
+            }
+        },
+        runtimeChunk: {
+            name: "manifest"
+        },
+        namedChunks:true
     },
     plugins: [
         new MiniCssExtractPlugin({
@@ -113,49 +118,10 @@ module.exports = {
         new CleanWebpackPlugin(['assets'], {
             root: path.resolve(__dirname, '..')
         }),
-        // new webpack.optimize.CommonsChunkPlugin({
-        //     name: 'vendor',
-        //     /**
-        //      * 打包来源精确控制
-        //      * @param  {Object} module 模块路径相关信息
-        //      * module.context: The directory that stores the file. For example: '/my_project/node_modules/example-dependency'
-        //      * module.resource: The name of the file being processed. For example: '/my_project/node_modules/example-dependency/index.js'
-        //      * @param  {Number} count  模块被引用的次数
-        //      * @return {Boolean}       返回boolean类型，如果是true，将进行提取
-        //      */
-        //     minChunks: function (module, count) {
-        //         // This prevents stylesheet resources with the .css or .scss extension
-        //         // from being moved from their original chunk to the vendor chunk
-        //         if (module.resource && (/^.*\.(css|scss)$/).test(module.resource)) {
-        //             return false;
-        //         }
-
-        //         return module.context && module.context.indexOf("node_modules") !== -1;
-        //     }
-        // }),
-        // new webpack.optimize.CommonsChunkPlugin({
-        //     name: "manifest",
-        //     minChunks: Infinity
-        // }),
-        // new webpack.optimize.UglifyJsPlugin({
-        //     compress: {
-        //         warnings: false,
-        //         drop_console: true,
-        //         drop_debugger: true,
-        //         //支持ie8
-        //         screw_ie8: false
-        //     },
-        //     output: {
-        //         comments: false
-        //     },
-        //     mangle: {
-        //         // 以下内容原样输出
-        //         except: ['$', 'exports', 'require']
-        //     },
-        // }),
         //压缩本地图片的方法
         new TinyPngWebpackPlugin({
             key: config.tinyPngKeys
-        })
+        }),
+        new HtmlAssetsPlugin()
     ]
 };
