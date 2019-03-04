@@ -1,1 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([["h5-demo"],{38:function(n,exports,o){}},[[38,"manifest"]]]);

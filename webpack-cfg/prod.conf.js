@@ -13,6 +13,8 @@ let imgName = config.md5 ? 'img/[name]-[hash:6].[ext]' : 'img/[name].[ext]';
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const TinyPngWebpackPlugin = require('tinypng-webpack-plugin');
 const HtmlAssetsPlugin = require('./htmlAssetsPlugin');
+// const HtmlWebpackEntryPlugin = require('../../html-webpack-entry-plugin/index');
+const HtmlWebpackEntryPlugin = require('html-webpack-entry-plugin');
 module.exports = {
     mode: 'production',
     module: {
@@ -122,6 +124,7 @@ module.exports = {
         new TinyPngWebpackPlugin({
             key: config.tinyPngKeys
         }),
-        new HtmlAssetsPlugin()
+        new HtmlWebpackEntryPlugin()
+        // new HtmlAssetsPlugin()
     ]
 };
