@@ -2487,6 +2487,10 @@ es-to-primitive@^1.2.0:
     is-date-object "^1.0.1"
     is-symbol "^1.0.2"
 
+es5-shim@^4.5.12:
+  version "4.5.12"
+  resolved "https://registry.yarnpkg.com/es5-shim/-/es5-shim-4.5.12.tgz#508c13dda1c87dd3df1b50e69e7b96b82149b649"
+
 es5-shim@^4.5.8:
   version "4.5.9"
   resolved "https://registry.yarnpkg.com/es5-shim/-/es5-shim-4.5.9.tgz#2a1e2b9e583ff5fed0c20a3ee2cbf3f75230a5c0"
@@ -3454,9 +3458,9 @@ html-minifier@^3.5.20, html-minifier@^3.5.8:
     relateurl "0.2.x"
     uglify-js "3.4.x"
 
-"html-webpack-entry-plugin@https://github.com/skyujilong/html-webpack-entry-plugin":
+html-webpack-entry-plugin@^0.0.1:
   version "0.0.1"
-  resolved "https://github.com/skyujilong/html-webpack-entry-plugin#cc371f82f41752fb906d04e5e7cb235a02314e7f"
+  resolved "https://registry.yarnpkg.com/html-webpack-entry-plugin/-/html-webpack-entry-plugin-0.0.1.tgz#7a9d87716bbc46fd0437ae363f2d11dcb55350c6"
   dependencies:
     html-webpack-plugin "^4.0.0-beta.5"
 

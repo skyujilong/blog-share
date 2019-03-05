@@ -98,13 +98,13 @@ module.exports = {
             //js默认最大初始化并行请求数字
             maxInitialRequests:4,
             chunks: 'initial',
-            cacheGroups: {
-                vendors: {
-                    name:'vendors',
-                    test: /[\\/]node_modules[\\/]/,
-                    priority: -10
-                }
-            }
+            // cacheGroups: {
+            //     vendors: {
+            //         name:'vendors',
+            //         test: /[\\/]node_modules[\\/]/,
+            //         priority: -10
+            //     }
+            // }
         },
         runtimeChunk: {
             name: "manifest"
