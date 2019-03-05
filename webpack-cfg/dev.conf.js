@@ -3,14 +3,12 @@
 const path = require('path');
 const config = require('../config.js');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-// const ExtractTextPlugin = require("extract-text-webpack-plugin");
-// let extractTextPlugin = new ExtractTextPlugin('css/[name].css');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const OpenBrowserPlugin = require('open-browser-webpack-plugin');
-const webpack = require('webpack');
-
+const HtmlWebpackEntryPlugin = require('html-webpack-entry-plugin');
 module.exports = {
-    devtool: 'eval',
+    mode: 'development',
+    devtool: 'eval-source-map',
     module: {
         rules: [{
             test: /\.js$/,
@@ -21,9 +19,6 @@ module.exports = {
             test: /\.(scss|css)$/,
             use: [{
                     loader: MiniCssExtractPlugin.loader,
-                },
-                {
-                    loader: "style-loader"
                 },
                 {
                     loader: "css-loader"
@@ -61,43 +56,34 @@ module.exports = {
             }
         }]
     },
+    optimization: {
+        splitChunks: {
+            //js默认最大初始化并行请求数字
+            maxInitialRequests: 4,
+            chunks: 'initial'
+        },
+        runtimeChunk: {
+            name: "manifest"
+        },
+        namedChunks: false
+    },
     output: {
         path: path.resolve(__dirname, '..', 'test'),
         filename: 'js/[name].js',
-        publicPath: config.publicPath,
-        chunkFilename: 'js/[name]-chunk.js'
+        publicPath: config.publicPath
     },
     plugins: [
         new CleanWebpackPlugin(['test'], {
             root: path.resolve(__dirname, '..')
         }),
+        new HtmlWebpackEntryPlugin(),
         new MiniCssExtractPlugin({
             filename: 'css/[name].css',
             chunkFilename: 'css/[name].css',
         }),
         new OpenBrowserPlugin({
             url: 'http://test.sina.com.cn/',
-            browser:'chrome'
-        }),
-        // new webpack.optimize.CommonsChunkPlugin({
-        //     name: 'vendor',
-        //     /**
-        //      * 打包来源精确控制
-        //      * @param  {Object} module 模块路径相关信息
-        //      * module.context: The directory that stores the file. For example: '/my_project/node_modules/example-dependency'
-        //      * module.resource: The name of the file being processed. For example: '/my_project/node_modules/example-dependency/index.js'
-        //      * @param  {Number} count  模块被引用的次数
-        //      * @return {Boolean}       返回boolean类型，如果是true，将进行提取
-        //      */
-        //     minChunks: function (module, count) {
-        //         // This prevents stylesheet resources with the .css or .scss extension
-        //         // from being moved from their original chunk to the vendor chunk
-        //         if (module.resource && (/^.*\.(css|scss)$/).test(module.resource)) {
-        //             return false;
-        //         }
-
-        //         return module.context && module.context.indexOf("node_modules") !== -1;
-        //     }
-        // })
+            browser: 'google chrome'
+        })
     ]
 };

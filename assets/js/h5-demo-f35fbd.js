@@ -1,1 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([["h5-demo"],{39:function(n,exports,o){o(15),n.exports=o(40)},40:function(n,exports,o){}},[[39,"manifest","vendors~h5-demo~index~pc-demo"]]]);

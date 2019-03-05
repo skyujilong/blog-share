@@ -16,7 +16,7 @@ module.exports = {
         let map = {};
         entryFiles.forEach((filePath) => {
             let filename = filePath.substring(filePath.lastIndexOf('\/') + 1, filePath.lastIndexOf('.'));
-            map[filename] = ['es5-shim', filePath];
+            map[filename] = filePath;
         });
         return map;
     })()

@@ -13,12 +13,12 @@ let HtmlWebpackPlugin = require('html-webpack-plugin');
  */
 module.exports = (entryObj) => {
     let htmlDir = path.resolve(__dirname, '..', 'pages', 'html');
-    console.log(htmlDir);
     let entryHtml = glob.sync(htmlDir + '/*.html');
     let r = [];
     entryHtml.forEach((filePath) => {
         let filename = filePath.substring(filePath.lastIndexOf('\/') + 1, filePath.lastIndexOf('.'))
         let conf = {
+            inject:'body',
             minify:false,
             template: filePath,
             filename: filename + '.html'
