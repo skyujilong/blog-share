@@ -11,6 +11,13 @@
         "dev-ie-server": "node ./node_modules/http-server/bin/http-server ./test -p 80"
     },
     "dependencies": {
+        "@types/es6-promise": "^3.3.0",
+        "@types/mustache": "^0.8.32",
+        "@types/node": "^10.12.10",
+        "@types/swiper": "^4.2.4",
+        "@types/webpack-env": "^1.13.6",
+        "ts-loader": "^3.5.0",
+        "typescript": "^3.1.6",
         "autoprefixer": "^6.7.7",
         "babel-loader": "^7.1.5",
         "babel-plugin-transform-runtime": "^6.23.0",

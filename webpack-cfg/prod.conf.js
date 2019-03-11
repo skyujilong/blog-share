@@ -18,6 +18,9 @@ module.exports = {
     mode: 'production',
     module: {
         rules: [{
+            test: /\.ts/,
+            loader: 'ts-loader'
+        }, {
             test: /\.js$/,
             exclude: /node_modules/,
             loader: "babel-loader"
@@ -31,10 +34,10 @@ module.exports = {
                     loader: "css-loader"
                 },
                 {
-                    loader:"postcss-loader"
+                    loader: "postcss-loader"
                 },
                 {
-                    loader:"sass-loader"
+                    loader: "sass-loader"
                 }
             ]
         }, {
@@ -69,17 +72,17 @@ module.exports = {
         filename: jsName,
         publicPath: config.onLinePublicPath
     },
-    optimization:{
-        minimizer:[
+    optimization: {
+        minimizer: [
             new TerserPlugin({
                 sourceMap: true,
                 cache: true,
                 parallel: true,
-                terserOptions:{
-                    // ecma:5,
-                    ie8:true,
-                    safari10:true,
-                    mangle:{
+                terserOptions: {
+                    ecma:5,
+                    ie8: true,
+                    safari10: true,
+                    mangle: {
                         reserved: ['$', 'exports', 'require']
                     },
                     output: {
@@ -93,9 +96,9 @@ module.exports = {
                 }
             })
         ],
-        splitChunks:{
+        splitChunks: {
             //js默认最大初始化并行请求数字
-            maxInitialRequests:4,
+            maxInitialRequests: 4,
             chunks: 'initial',
             // cacheGroups: {
             //     vendors: {
@@ -108,7 +111,7 @@ module.exports = {
         runtimeChunk: {
             name: "manifest"
         },
-        namedChunks:true
+        namedChunks: true
     },
     plugins: [
         new MiniCssExtractPlugin({
@@ -124,6 +127,5 @@ module.exports = {
             key: config.tinyPngKeys
         }),
         new HtmlWebpackEntryPlugin()
-        // new HtmlAssetsPlugin()
     ]
 };

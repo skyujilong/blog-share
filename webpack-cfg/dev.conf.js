@@ -11,6 +11,9 @@ module.exports = {
     devtool: 'eval-source-map',
     module: {
         rules: [{
+            test: /\.ts/,
+            loader: 'ts-loader'
+        }, {
             test: /\.js$/,
             exclude: /node_modules/,
             loader: "babel-loader"

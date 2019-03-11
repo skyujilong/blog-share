@@ -9,6 +9,9 @@ module.exports = {
     devtool: 'eval',
     module: {
         rules: [{
+            test: /\.ts/,
+            loader: 'ts-loader'
+        }, {
             test: /\.js$/,
             exclude: /node_modules/,
             loader: "babel-loader"
